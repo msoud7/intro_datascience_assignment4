@@ -61,6 +61,8 @@ print(datasummary)
 ```
 
 **Designated place**: type one or two sentences describing this table of a fellow student below. For example, comment on the mean and median growth of both groups. Then stage, commit and push it to their github repository. 
+The table depicts the overall differences in statistics between groups with no revolutions and groups with some revolutions. By looking at the mean of the economic growth of countries without revolution and the one for countries with revolutions, we would see that the latter has a significantly lower value.  By comparing the minimum economic growth, we would see that while for the countries with no revolutions it was somewhere close to 0, for those with revolutions, the minimum economic growth was actually negative, meaning a possible recession.
+
 
 
 ### Part 3: Make a table summarizing reressions using modelsummary and kable
@@ -87,8 +89,7 @@ $$
 $$
 
 **Question 3.3**: What do you think the purpose of including the variable `rgdp60` is? Look at `?GrowthSW` to find out what the variables mean. 
- 
-  Above, we find depicted a linear model with the dependent variable being  "growth, whereas the independent variables are: "treat", "rgdp60","tradeshare" and education. By including "rgdp60" as one of the independent variables in the model, our aim is to control for the influence of the initial economic conditions on the growth rate (growth) being studied. Linear models in general do not provide us with certain results, however it helps us determine the effects of the independent variables on the dependent variable. Given that all the other variables are held constant, a change of one unit in "rgdp60" will lead, on average, to a β2 change in growth.
+  By looking both at the linear model from above and the GrowtSW data-set, I am inclined to believe that the variable "rgdp60" is included to show the existence of a correlation between economic growth and the gross domestic product of a country in the year 1960. Given that a linear model is primarilu used in order to establish the correlation between one dependent variable(growth) and some independent variables(treat, rgdp60, tradeshare, education), the coefficient is the indication of the effect of rgdp60 on the "growth" assuming all the other variables are held constant.
 
 
 We now want to estimate a stepwise model. Stepwise means that we first estimate a univariate regression $\text{growth}_i = \beta_0 + \beta_1 \cdot \text{treat}_i + \epsilon_i$, and in each subsequent model, we add one control variable. 
@@ -118,9 +119,7 @@ list(model1, model2, model3, model4) |>
 **Question 3.5**: Edit the code chunk above to remove many statistics from the table, but keep only the number of observations $N$, and the $R^2$ statistic. 
 
 **Question 3.6**: According to this analysis, what is the main driver of economic growth? Why?
-
-Education??
-ANSWER
+According to the value obtained for R2, education is the main driver of economic growth. By interpreting the R squared value, we arrive at the conclusion that education explains a large part of the variation in the economic growth.
 
 **Question 3.7**: In the code chunk below, edit the table such that the cells (including standard errors) corresponding to the variable `treat` have a red background and white text. Make sure to load the `kableExtra` library beforehand.
 
@@ -136,7 +135,11 @@ table
 
 **Question 3.8**: Write a piece of code that exports this table (without the formatting) to a Word document. 
 ```{r}
-library(ReporteRs)
+library(flextable)
+list(model1,model2,model3,model4) |>
+  modelsummary(gof_map = c("nobs","r.squared"),
+               stars = T, title="regression table",
+               output = "regressiontable_assignment4.docx")
 
 ```
 
